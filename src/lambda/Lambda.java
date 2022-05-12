@@ -8,14 +8,45 @@ package lambda;
 public class Lambda {
     public static void main(String[] args) {
 //        Object obj = (a, b) -> a > b ? a : b;
-        Object obj = new Object() {
-            int max(int a, int b) {
-                return a > b ? a : b;
+//        MyFunction f = new MyFunction() {
+//            public int max(int a, int b) { // 오버라이딩 - 접근제어자는 좁게 못바꾼다.
+//                return a > b ? a : b;
+//            }
+//        };
+        // 람다식을 다루기 위한 참조변수의 타입은 함수형 인터페이스로 한다.
+        MyFunction f = (a, b) -> a < b ? a : b; // 람다식, 익명 객체
+
+        int value = f.max(3, 5); // 함수형 인터페이스
+        System.out.println("value = " + value);
+
+        /******************************/
+
+        MyFunction2 f1 = () -> System.out.println("f1.run()");
+        MyFunction2 f2 = new MyFunction2() {
+            public void run() {
+                System.out.println("f2.run");
             }
         };
 
-        int value = obj.max(3, 5); // 함수형 인터페이스
+        MyFunction2 f3 = getMyfunction();
+
+        f1.run();
+        f2.run();
+        f3.run();
+        execute(f2);
+        execute(() -> System.out.println("run()"));
+
     }
+
+    static void execute(MyFunction2 f) {
+        f.run();
+    }
+
+    static MyFunction2 getMyfunction() {
+        MyFunction2 f = () -> System.out.println("f3.run()");
+        return f;
+    }
+
 
     /** 람다식 작성하기*/
     // 1. 메서드의 이름과 반환타입을 제거하고 '->'를 블록({})앞에 추가한다.
@@ -59,4 +90,21 @@ public class Lambda {
 
     (int i) -> System.out.println(i)
      */
+
+    /**
+     * 함수형 인터페이스
+     * - 한개의 추상 메서드를 선언된 인터페이스
+     * @FunctionalInterface
+     *
+     */
+}
+
+@FunctionalInterface
+interface MyFunction {
+    public abstract int max(int a, int b);
+}
+
+@FunctionalInterface
+interface MyFunction2 {
+    void run();
 }
