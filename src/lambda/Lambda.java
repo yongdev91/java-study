@@ -18,6 +18,7 @@ public class Lambda {
 
         int value = f.max(3, 5); // 함수형 인터페이스
         System.out.println("value = " + value);
+        /**/
 
         /******************************/
 
