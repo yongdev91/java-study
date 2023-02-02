@@ -23,6 +23,7 @@ public class Lambda {
         /******************************/
         /**/
         /**/
+        /**/
 
         MyFunction2 f1 = () -> System.out.println("f1.run()");
         MyFunction2 f2 = new MyFunction2() {
